@@ -1,0 +1,10 @@
+# cmake
+*.stackdump
+*.cmake
+cpp/CMakeFiles
+CMakeCache.txt
+
+*.exe
+
+# IDE - VSCode
+.vscode/*

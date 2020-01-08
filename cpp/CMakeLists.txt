@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 3.15)
+project(graph_algo)
+
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(graph_algo main.cpp algorithms/BipartiteMatchingAlgorithm.cpp algorithms/BipartiteMatchingAlgorithm.h algorithms/BipartitionAlgorithm.cpp algorithms/BipartitionAlgorithm.h algorithms/ChristofidesAlgorithm.cpp algorithms/ChristofidesAlgorithm.h algorithms/FootballBettingGameAlgorithm.cpp algorithms/FootballBettingGameAlgorithm.h dataStructures/FootballBettingGameSolution.cpp dataStructures/FootballBettingGameSolution.h dataStructures/FootballTeam.cpp dataStructures/FootballTeam.h dataStructures/Matchday.cpp dataStructures/Matchday.h dataStructures/NonBipartitionCertificate.cpp dataStructures/NonBipartitionCertificate.h io/FootballBettingGameParser.cpp io/FootballBettingGameParser.h)
+
+include_directories(include)
+
+#find_library(LEMONConfig lemon /pathtolemonGraphLibrary/lib/)
