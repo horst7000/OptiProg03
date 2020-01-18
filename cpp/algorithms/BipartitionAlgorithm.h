@@ -4,9 +4,27 @@
 #include <lemon/list_graph.h>
 #include "../dataStructures/NonBipartitionCertificate.h"
 
+using namespace lemon;
+
+struct labeledBiGraph {
+    lemon::ListBpGraph* graphPtr;
+    lemon::ListBpGraph::NodeMap<int>* labelPtr;
+    lemon::ListBpGraph::EdgeMap<int>* weightPtr;
+};
+
 class BipartitionAlgorithm {
 private:
     NonBipartitionCertificate* nonBipartitionCertificate;
+    labeledBiGraph labGraph;
+    int* pre;
+    int colorError;
+    lemon::ListGraph::NodeMap<bool>* isColored;
+
+    ListGraph* graphPtr;
+    ListGraph::EdgeMap<int>* weightPtr;
+
+    void recursivePartitioning(ListGraph::Node, ListBpGraph::Node, bool red);
+    ListBpGraph::Edge addEdge(ListBpGraph::Node v, ListBpGraph::Node predecessor, bool isVRed);
 
 public:
 
@@ -17,7 +35,7 @@ public:
      *
      * @return a bipartition of graph or empty partition if there is no bipartition
      */
-    lemon::ListBpGraph* getPartitioning(lemon::ListGraph& graph);
+    labeledBiGraph getPartitioning(lemon::ListGraph& graph,  ListGraph::EdgeMap<int>& weight);
 
     /**
      * Returns the non-bipartition certificate if graph is not bipartite, null otherwise.
@@ -25,7 +43,7 @@ public:
      *
      * @return the non-bipartition certificate, null otherwise
      */
-    NonBipartitionCertificate* getNonBipartitionCertificate(lemon::ListGraph& graph);
+    NonBipartitionCertificate* getNonBipartitionCertificate(lemon::ListGraph& graph, ListGraph::EdgeMap<int>& weight);
 
     /**
      * Checks whether {@code partitioning} is a valid bipartite partitioning.

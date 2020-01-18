@@ -6,16 +6,12 @@
 #include <ostream>
 
 class NonBipartitionCertificate {
-    // TODO implement your data structure for a non-bipartition certificate here
 private:
-
+    int* pre;
+    int begin;
 public:
-    /**
-     * Returns the certificate
-     *
-     * @return the certificate
-     */
-    lemon::ListGraph* getCertificate();
+    NonBipartitionCertificate(int* pre, int begin) : pre(pre), begin(begin) {}
+    bool isValidPartitioning() { return begin == -1; }
 
     friend std::ostream &operator<<(std::ostream &os, const NonBipartitionCertificate &certificate);
 };

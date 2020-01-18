@@ -15,7 +15,7 @@
      */
 int main(int argc, char **argv) {
 
-    if(argc != 3) {
+    if(argc < 3) {
         std::cout << argc << std::endl;
         for (int i = 0; i < argc; ++i) {
             std::cout << i << ": " << argv[i] << std::endl;
@@ -26,7 +26,9 @@ int main(int argc, char **argv) {
     std::string arg0(argv[1]);
     std::string arg1(argv[2]);
 
-    if(arg0 == "1") {
+    
+
+    if(arg0 == "2") { // exercise 2
         std::cout << "Executing BipartititeMatchingAlgorithm" << std::endl;
 
         auto* graph = new lemon::ListGraph();
@@ -34,18 +36,18 @@ int main(int argc, char **argv) {
         lemon::ListGraph::NodeMap<int> label(*graph);
         lemon::ListGraph::EdgeMap<int> weight(*graph);
         reader->nodeMap("label", label)
-        .edgeMap("weight", weight)
-        .run();
+            .edgeMap("weight", weight)
+            .run();
 
         auto* bipartiteMatchingAlgorithm = new BipartiteMatchingAlgorithm();
 
         std::cout << "{";
-        for(auto &pair : *bipartiteMatchingAlgorithm->getMatching(*graph)) {
+        for(auto &pair : *bipartiteMatchingAlgorithm->getMatching(*graph, weight)) {
             std::cout << "(" << pair.first << " -> " << pair.second << ")";
         }
         std::cout << "}";
 
-    } else if(arg0 == "2") {
+    } else if(arg0 == "1") { // exercise 1
 
         std::cout << "Executing BipartitionAlgorithm" << std::endl;
 
@@ -59,13 +61,17 @@ int main(int argc, char **argv) {
 
         auto* bipartitionAlgorithm = new BipartitionAlgorithm();
 
-        lemon::ListBpGraph* partitioning = bipartitionAlgorithm->getPartitioning(*graph);
+        labeledBiGraph partitioning = bipartitionAlgorithm->getPartitioning(*graph, weight);
 
-        (new lemon::BpGraphWriter<lemon::ListBpGraph>(*partitioning, std::cout))->run();
+        (new lemon::BpGraphWriter<lemon::ListBpGraph>(*partitioning.graphPtr, std::cout))
+            ->nodeMap("label", *partitioning.labelPtr)
+            .edgeMap("weight", *partitioning.weightPtr)
+            .run();
         std::cout << std::endl;
 
-        std::cout << bipartitionAlgorithm->isValidPartitioning(*partitioning) << std::endl;
-        std::cout << bipartitionAlgorithm->getNonBipartitionCertificate(*graph) << std::endl;
+        std::cout << "is valid partitioning?   ";
+        std::cout << bipartitionAlgorithm->isValidPartitioning(*partitioning.graphPtr) << std::endl;
+        std::cout << *bipartitionAlgorithm->getNonBipartitionCertificate(*graph, weight) << std::endl;
 
     } else if(arg0 == "3") {
         std::cout << "Executing FootballBettingGameAlgorithm" << std::endl;

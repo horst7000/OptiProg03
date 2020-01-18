@@ -1,11 +1,19 @@
 #include "NonBipartitionCertificate.h"
 
-// TODO implement your data structure for a non-bipartition certificate here
-lemon::ListGraph* NonBipartitionCertificate::getCertificate() {
-    return nullptr;
-}
-
 std::ostream &operator<<(std::ostream &os, const NonBipartitionCertificate &certificate) {
-    // TODO implement a reasonable output
+    if(certificate.begin != -1) {
+
+        os << "Es liegt ein Kreis ungerader Länge vor:" << std::endl;
+
+        os << certificate.begin << " ";
+        int predecessor = certificate.pre[certificate.begin];
+        os << predecessor << " ";
+
+        while(predecessor != -1 && predecessor != certificate.begin) {
+            predecessor = certificate.pre[predecessor];
+            os << predecessor << " ";
+        }
+        os << std::endl;
+    }
     return os;
 }
