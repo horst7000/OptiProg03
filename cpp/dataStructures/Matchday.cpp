@@ -19,7 +19,8 @@ std::ostream &operator<<(std::ostream &os, const Matchday &matchday) {
     os << "number: " << matchday.number << " matches: ";
     os << "{";
     for(auto &pair : matchday.matches) {
-        os << "((" << pair.first.first << "," << pair.first.second << ") -> (" << pair.second.first << ", " <<  pair.second.second << "))";
+        os << "((" << pair.first.first << ", " << pair.first.second << ") -> (" << pair.second.first << ", " <<  pair.second.second << "))";
+        os << "  ";
     }
     os << "}";
     return os;

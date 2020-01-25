@@ -85,7 +85,7 @@ int main(int argc, char **argv) {
 
         std::cout << "{";
             for (const auto &pair : *footballBettingGameSolution->getSolution()) {
-                std::cout << "(" << pair.first << " -> " << pair.second << ")";
+                std::cout << "(" << pair.first << "   ->    " << *pair.second << ")" << std::endl << std::endl;
             }
         std::cout << "}";
 
@@ -101,11 +101,18 @@ int main(int argc, char **argv) {
                 .run();
 
         auto* tspAlgorithm = new ChristofidesAlgorithm();
-
-        (new lemon::GraphWriter<lemon::ListGraph>(*tspAlgorithm->getTour(*graph), std::cout))->run();
+        labeledGraph touri = tspAlgorithm->getTour(*graph, weight);
+        (new lemon::GraphWriter<lemon::ListGraph>(*touri.graphPtr, std::cout))
+            ->nodeMap("label", *touri.labelPtr)
+            .edgeMap("weight", *touri.weightPtr)
+            .run();
         std::cout << std::endl;
 
-        (new lemon::GraphWriter<lemon::ListGraph>(*tspAlgorithm->getNonTSPCertificate(*graph), std::cout))->run();
+        // (new lemon::GraphWriter<lemon::ListGraph>(*tspAlgorithm->getNonTSPCertificate(*graph), std::cout))->run();
+        labeledGraph cert = tspAlgorithm->getNonTSPCertificate(*graph);
+        (new lemon::GraphWriter<lemon::ListGraph>(*cert.graphPtr, std::cout))
+            ->nodeMap("label", *cert.labelPtr)
+            .run();
         std::cout << std::endl;
     }
 }

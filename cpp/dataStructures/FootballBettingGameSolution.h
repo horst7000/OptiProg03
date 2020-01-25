@@ -10,14 +10,17 @@ class FootballBettingGameSolution {
     // TODO implement your data structure for al football betting game solution here
 
 private:
+    std::map<FootballTeam, Matchday*>* solutionMapPtr;
 
 public:
+    FootballBettingGameSolution(std::map<FootballTeam, Matchday*>* mapPtr) : solutionMapPtr(mapPtr) {}
+
     /**
      * Returns mapping from football team to matchday.
      *
      * @return the mapping from football team to matchday
      */
-    std::map<FootballTeam, Matchday>* getSolution();
+    std::map<FootballTeam, Matchday*>* getSolution();
 };
 
 

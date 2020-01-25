@@ -75,9 +75,6 @@ ListBpGraph::Edge BipartitionAlgorithm::addEdge(ListBpGraph::Node v, ListBpGraph
 }
 
 labeledBiGraph BipartitionAlgorithm::getPartitioning(lemon::ListGraph& graph,  ListGraph::EdgeMap<int>& weight) {
-    // TODO check graph properties
-    // ???
-
     // initialization
     pre = new int[countNodes(graph)+1]; // array to save the predecessor label
     std::fill_n(pre,countNodes(graph)+1,-1);
@@ -114,6 +111,7 @@ bool BipartitionAlgorithm::isValidPartitioning(lemon::ListBpGraph& partitioning)
 
     // TODO implement verification algorithm for bipartitions
     // ???
+    // lemon::ListBpGraph is always bipartit
 
     return (colorError == -1); // -1 is valid state
 }
